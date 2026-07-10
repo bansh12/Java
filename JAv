@@ -1,0 +1,24 @@
+public void m1(int a,int b){
+    System.out.println(a+b);
+}
+(a,b) -> System.out.println(a+b);
+
+nameless
+without return type
+without access modifier
+
+
+eg-2,
+public int square(int a){
+    return a*a;
+}
+a-> a*a;
+
+
+eg-3,
+
+public void m1(String s){
+    return s.length();
+}
+
+s-> s.length();
