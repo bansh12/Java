@@ -1,24 +1,710 @@
-public void m1(int a,int b){
-    System.out.println(a+b);
+Object
+   │
+   ▼
+Throwable
+   │
+   ├──────────────► Exception
+   │                 │
+   │                 ├────────────► RuntimeException (Unchecked)
+   │                 │               │
+   │                 │               ├──► ArithmeticException (AE)
+   │                 │               ├──► ClassCastException (CCE)
+   │                 │               ├──► NullPointerException (NPE)
+   │                 │               ├──► IndexOutOfBoundsException
+   │                 │               │      ├──► ArrayIndexOutOfBoundsException (AIOOBE)
+   │                 │               │      └──► StringIndexOutOfBoundsException (SIOOBE)
+   │                 │               ├──► IllegalArgumentException
+   │                 │               └──► NumberFormatException
+   │                 │
+   │                 ├────────────► IOException
+   │                 │               ├──► FileNotFoundException
+   │                 │               └──► EOFException
+   │                 │
+   │                 ├────────────► SQLException
+   │                 │
+   │                 ├────────────► ServletException
+   │                 │
+   │                 └────────────► InterruptedException
+   │
+   └──────────────► Error
+                     │
+                     ├────────────► VirtualMachineError
+                     │               ├──► StackOverflowError
+                     │               └──► OutOfMemoryError
+                     │
+                     ├────────────► LinkageError
+                     │
+                     └────────────► AssertionError
+
+
+
+Exception Handling
+        │                                                                                                
+        ├────────► try
+        │            │
+        │            └──► Contains risky code
+        │
+        ├────────► catch
+        │            │
+        │            └──► Handles the exception
+        │
+        ├────────► finally
+        │            │
+        │            └──► Always executes (Exception ho ya na ho)
+        │
+        ├────────► throw
+        │            │
+        │            └──► Used to explicitly throw an exception
+        │
+        └────────► throws
+                     │
+                     └──► Declares exceptions in method signature
+
+
+
+
+Java
+ │
+ ├────────► final
+ │             │
+ │             ├──► Keyword
+ │             ├──► Final Variable
+ │             ├──► Final Method
+ │             └──► Final Class
+ │
+ ├────────► finally
+ │             │
+ │             ├──► Keyword
+ │             ├──► Used with try-catch
+ │             └──► Always executes
+ │
+ └────────► finalize()
+               │
+               ├──► Method
+               ├──► Called by Garbage Collector
+               └──► Used for cleanup (Deprecated)
+
+                          Iterable
+                              │
+                         Collection (Interface)
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+      List                 Set                 Queue
+        │                     │                     │
+ ┌──────┼──────┐         ┌────┼─────┐        ┌──────┼────────┐
+ │      │      │         │    │     │        │               │
+ArrayList LinkedList Vector HashSet LinkedHashSet PriorityQueue ArrayDeque
+                      │
+                  Stack
+                            │
+                        SortedSet
+                            │
+                         NavigableSet
+                            │
+                          TreeSet
+
+
+                    Map (Separate Interface)
+                            │
+          ┌─────────────────┼─────────────────┐
+          │                 │                 │
+      HashMap        LinkedHashMap       Hashtable
+                                               │
+                                           Properties
+                            │
+                        SortedMap
+                            │
+                      NavigableMap
+                            │
+                         TreeMap
+
+import java.util.ArrayList;
+
+public class ArrayListExample {
+
+    public static void main(String[] args) {
+
+        ArrayList<String> al = new ArrayList<>();
+
+        al.add("Apple");
+        al.add("Orange");
+        al.add("Banana");
+        al.add("Mango");
+
+        System.out.println(al);
+
+        al.remove("Apple");
+        System.out.println(al);
+
+        System.out.println("First Element: " + al.get(1));
+    }
+
 }
-(a,b) -> System.out.println(a+b);
+Ye saare topics **JDBC (Java Database Connectivity)** ke important interview aur viva topics hain. Neeche har topic ko simple English me explain kiya gaya hai.
 
-nameless
-without return type
-without access modifier
+---
 
+# JDBC (Java Database Connectivity)
 
-eg-2,
-public int square(int a){
-    return a*a;
+```
+Java Program
+      │
+      ▼
+     JDBC API
+      │
+      ▼
+  JDBC Driver
+      │
+      ▼
+   Database
+```
+
+### Definition
+
+**JDBC (Java Database Connectivity)** is a Java API that allows Java applications to connect with databases, execute SQL queries, and retrieve or update data.
+
+---
+
+# Components of JDBC
+
+```
+JDBC
+ │
+ ├──► DriverManager
+ ├──► Driver
+ ├──► Connection
+ ├──► Statement
+ ├──► PreparedStatement
+ ├──► CallableStatement
+ ├──► ResultSet
+ └──► SQLException
+```
+
+### 1. DriverManager
+
+* Manages JDBC drivers.
+* Creates database connection.
+
+Example:
+
+```java
+Connection con = DriverManager.getConnection(url, user, password);
+```
+
+---
+
+### 2. Driver
+
+* Software that connects Java with a database.
+
+---
+
+### 3. Connection
+
+* Represents the connection between Java and the database.
+
+---
+
+### 4. Statement
+
+* Used to execute simple SQL queries.
+
+---
+
+### 5. PreparedStatement
+
+* Used for parameterized queries.
+* Faster and more secure than `Statement`.
+
+---
+
+### 6. CallableStatement
+
+* Used to call stored procedures.
+
+---
+
+### 7. ResultSet
+
+* Stores data returned by a SELECT query.
+
+---
+
+### 8. SQLException
+
+* Handles database-related errors.
+
+---
+
+# Types of JDBC Drivers
+
+```
+JDBC Drivers
+      │
+ ┌────┼────┬────┬────┐
+ │    │    │    │
+Type1 Type2 Type3 Type4
+```
+
+### Type 1 – JDBC-ODBC Bridge Driver
+
+* Uses ODBC.
+* Slow.
+* Removed after Java 8.
+
+---
+
+### Type 2 – Native Driver
+
+* Uses native database libraries.
+* Faster than Type 1.
+* Platform dependent.
+
+---
+
+### Type 3 – Network Protocol Driver
+
+* Uses middleware server.
+* Platform independent.
+
+---
+
+### Type 4 – Thin Driver ⭐ (Most Used)
+
+* Pure Java driver.
+* Directly communicates with the database.
+* Fastest.
+* Platform independent.
+
+Example:
+
+* MySQL Connector/J
+* Oracle Thin Driver
+
+---
+
+# Steps to Connect Database
+
+```
+Start
+  │
+  ▼
+Load Driver
+  │
+  ▼
+Create Connection
+  │
+  ▼
+Create Statement
+  │
+  ▼
+Execute Query
+  │
+  ▼
+Process Result
+  │
+  ▼
+Close Connection
+```
+
+## Step 1
+
+Load Driver
+
+```java
+Class.forName("com.mysql.cj.jdbc.Driver");
+```
+
+---
+
+## Step 2
+
+Create Connection
+
+```java
+Connection con =
+DriverManager.getConnection(url,user,password);
+```
+
+---
+
+## Step 3
+
+Create Statement
+
+```java
+Statement st = con.createStatement();
+```
+
+---
+
+## Step 4
+
+Execute SQL
+
+```java
+ResultSet rs = st.executeQuery(sql);
+```
+
+---
+
+## Step 5
+
+Read Data
+
+```java
+while(rs.next()){
+    System.out.println(rs.getInt(1));
 }
-a-> a*a;
+```
+
+---
+
+## Step 6
+
+Close
+
+```java
+rs.close();
+st.close();
+con.close();
+```
+
+---
+
+# Statement
+
+### Definition
+
+Statement is used to execute normal SQL queries.
+
+Example
+
+```java
+Statement st = con.createStatement();
+st.executeQuery("SELECT * FROM student");
+```
+
+### Advantages
+
+* Easy to use.
+
+### Disadvantages
+
+* Slow.
+* Vulnerable to SQL Injection.
+
+---
+
+# PreparedStatement
+
+### Definition
+
+PreparedStatement executes parameterized SQL queries.
+
+Example
+
+```java
+PreparedStatement ps =
+con.prepareStatement(
+"SELECT * FROM student WHERE id=?");
+
+ps.setInt(1,101);
+```
+
+### Advantages
+
+* Faster
+* Secure
+* Prevents SQL Injection
+* Reusable
+
+---
+
+# CallableStatement
+
+### Definition
+
+Used to call Stored Procedures.
+
+Example
+
+```java
+CallableStatement cs =
+con.prepareCall("{call getStudent()}");
+```
+
+---
+
+# executeQuery()
+
+### Definition
+
+Used for SELECT queries.
+
+Returns
+
+```
+ResultSet
+```
+
+Example
+
+```java
+ResultSet rs =
+st.executeQuery("SELECT * FROM student");
+```
+
+---
+
+# executeUpdate()
+
+### Definition
+
+Used for
+
+* INSERT
+* UPDATE
+* DELETE
+
+Returns
+
+```
+int
+```
+
+(number of rows affected)
+
+Example
+
+```java
+int n =
+st.executeUpdate(
+"UPDATE student SET marks=90 WHERE id=1");
+```
+
+---
+
+# execute()
+
+### Definition
+
+Used when you don't know whether the SQL returns data or an update count.
+
+Returns
+
+```
+boolean
+```
+
+Example
+
+```java
+boolean b = st.execute(sql);
+```
+
+---
+
+# executeQuery() vs executeUpdate()
+
+| executeQuery()    | executeUpdate()                 |
+| ----------------- | ------------------------------- |
+| Used for SELECT   | Used for INSERT, UPDATE, DELETE |
+| Returns ResultSet | Returns int                     |
+| Reads data        | Modifies data                   |
+
+---
+
+# Stored Procedure
+
+### Definition
+
+A Stored Procedure is a collection of SQL statements stored in the database and executed as a single unit.
+
+Example
+
+```sql
+CREATE PROCEDURE showStudent()
+BEGIN
+SELECT * FROM student;
+END;
+```
+
+Advantages
+
+* Faster
+* Reusable
+* Secure
+
+---
+
+# Stored Function
+
+### Definition
+
+A Stored Function is similar to a procedure but **must return a value**.
+
+Example
+
+```sql
+CREATE FUNCTION totalMarks(a INT,b INT)
+RETURNS INT
+RETURN a+b;
+```
+
+Difference:
+
+| Stored Procedure            | Stored Function             |
+| --------------------------- | --------------------------- |
+| May or may not return value | Must return a value         |
+| Called with `CALL`          | Used inside SQL expressions |
+
+---
+
+# SQL Injection Attack
+
+### Definition
+
+SQL Injection is an attack where malicious SQL code is inserted through user input to manipulate the database.
+
+Unsafe Example
+
+```java
+String sql =
+"SELECT * FROM login WHERE username='"
++ user +
+"' AND password='" + pass + "'";
+```
+
+If input is:
+
+```
+' OR '1'='1
+```
+
+The query may become true for all rows, allowing unauthorized access.
+
+### Prevention
+
+* Use `PreparedStatement`.
+* Validate user input.
+* Use least-privilege database accounts.
+
+---
+
+# Transaction Management
+
+### Definition
+
+A transaction is a group of SQL operations executed as one unit.
+
+### ACID Properties
+
+* **A** – Atomicity
+* **C** – Consistency
+* **I** – Isolation
+* **D** – Durability
+
+### Methods
+
+```java
+con.setAutoCommit(false);
+
+con.commit();
+
+con.rollback();
+```
+
+Flow:
+
+```
+Transaction
+      │
+      ├──► commit()
+      │        Save changes
+      │
+      └──► rollback()
+               Undo changes
+```
+
+---
+
+# ResultSet
+
+### Definition
+
+`ResultSet` stores the records returned by a `SELECT` query.
+
+Example
+
+```java
+ResultSet rs =
+st.executeQuery("SELECT * FROM student");
+
+while(rs.next()){
+
+    System.out.println(rs.getInt("id"));
+    System.out.println(rs.getString("name"));
+}
+```
+
+### Important Methods
+
+| Method        | Purpose                                           |
+| ------------- | ------------------------------------------------- |
+| `next()`      | Moves to the next row                             |
+| `previous()`  | Moves to the previous row (scrollable result set) |
+| `first()`     | Moves to the first row                            |
+| `last()`      | Moves to the last row                             |
+| `getInt()`    | Reads an integer value                            |
+| `getString()` | Reads a string value                              |
+| `getDouble()` | Reads a double value                              |
+| `close()`     | Closes the `ResultSet`                            |
+
+---
 
 
-eg-3,
+#########################################################
+JAVA AND FEATURES
+1. Lambda exp
+2. Functional Interface
+3. Predefined functional Interface
+   (a) Predicate
+   (b) Functions
+   (c) Consumer
+   (d) Supplier
+4. Default and Static methods
+5. Optional Class
+6. Double colon Operaters (::)
+   (a) method reference
+   (b) Constraction reference
+7. Streams
+8. Date and Time API
 
+
+
+ex===========
 public void m1(String s){
-    return s.length();
+ return s.length();
 }
+  s->s.length();
+================
 
-s-> s.length();
+NameLess
+Without return type
+without modifier
+(a,b)-> System.out.println(a+b);
+
+ex=================
+
+public int squareIt(int n)
+{
+return n*n;
+}
+n-> n*n;
+
+ex===================
+public void m1(String s){
+return s1.length();
+}
+s->s.length();
